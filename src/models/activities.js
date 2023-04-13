@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import collections from '../collections';
 
-const collectionName = collections['naboo']['activities'];
+const collectionName = collections['test']['activities'];
 
 const activitiesSchema = new mongoose.Schema(
   {
@@ -11,7 +11,7 @@ const activitiesSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    // Id of the user who created the activity
+    // Id of the user who created the activity. Linked with users collections
     userId: {
       required: true,
       type: String,
@@ -23,7 +23,7 @@ const activitiesSchema = new mongoose.Schema(
       enum: ['hiking', 'yoga', 'surf', 'bike', 'climbing', 'trail'],
       default: 'hiking',
     },
-    // Id of city of the activity. Linked with city collections
+    // Id of city of the activity. Linked with cities collections
     cityId: {
       required: true,
       type: String,
@@ -32,6 +32,14 @@ const activitiesSchema = new mongoose.Schema(
     price: {
       required: true,
       type: Number,
+    },
+    // Description of activity (optional)
+    description: {
+      type: String,
+    },
+    // Club of activity (optional)
+    club: {
+      type: String,
     },
   },
   { collection: collectionName },
