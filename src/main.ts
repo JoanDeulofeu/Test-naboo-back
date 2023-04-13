@@ -1,8 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import mongoose from 'mongoose';
+
+const PORT = 8080;
+
+// Connection URL
+// TODO Set all variables with .env
+const name = 'NabooAdmin';
+const mdp = 'yqBVWp9mz4YkGrCg';
+const ip = 'naboo-test-tech.8eggo9n.mongodb.net';
+const databaseName = 'test';
+const uri = `mongodb+srv://${name}:${mdp}@${ip}/${databaseName}?retryWrites=true&w=majority`;
+
+// ----- LOG to test. Remove it ! -----
+console.log('uri: ', uri);
+mongoose.connect(uri);
+const database = mongoose.connection;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(8080);
+  database.on('error', (error) => {
+    console.log(error);
+  });
+
+  database.once('connected', () => {
+    console.log('Database Connected !');
+  });
+
+  await app.listen(PORT, () =>
+    console.log('Naboo-test-tech back end is running on %s!', PORT),
+  );
 }
 bootstrap();
