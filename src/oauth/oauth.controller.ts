@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { OauthService } from './oauth.service';
 import { Request } from 'express';
+import { OauthService } from './oauth.service';
 
 @Controller('oauth')
 export class OauthController {

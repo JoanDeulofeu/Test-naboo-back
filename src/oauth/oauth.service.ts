@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+
 import { users } from '../models';
 
 const createUser = async (credentials, uid) =>
