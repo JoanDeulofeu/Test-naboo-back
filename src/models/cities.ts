@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 import collections from '../collections';
 
-const collectionName = collections['test']['users'];
+const collectionName = collections['test']['cities'];
 
-const usersSchema = new mongoose.Schema(
+const citiesSchema = new mongoose.Schema(
   {
-    // Id of the user
+    // Id of the city
     id: {
       required: true,
       type: String,
       unique: true,
     },
-    // Name of the user
+    // Name of the city
     name: {
       required: true,
       type: String,
@@ -20,4 +20,4 @@ const usersSchema = new mongoose.Schema(
   { collection: collectionName },
 );
 
-module.exports = mongoose.model(collectionName, usersSchema);
+export default mongoose.model(collectionName, citiesSchema);

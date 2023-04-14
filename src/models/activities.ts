@@ -45,4 +45,4 @@ const activitiesSchema = new mongoose.Schema(
   { collection: collectionName },
 );
 
-module.exports = mongoose.model(collectionName, activitiesSchema);
+export default mongoose.model(collectionName, activitiesSchema);

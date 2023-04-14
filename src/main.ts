@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import mongoose from 'mongoose';
+import initFirebase from './utils/initFirebase';
 
 const PORT = 8080;
 
@@ -26,6 +27,13 @@ async function bootstrap() {
   database.once('connected', () => {
     console.log('Database Connected !');
   });
+
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    methods: ['GET', 'POST'],
+  });
+
+  initFirebase();
 
   await app.listen(PORT, () =>
     console.log('Naboo-test-tech back end is running on %s!', PORT),
