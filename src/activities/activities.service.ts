@@ -10,6 +10,40 @@ interface City {
 
 @Injectable()
 export class ActivitiesService {
+  async getActivities(request): Promise<any> {
+    const { filterType, filter } = request.query;
+
+    // TODO Make a aggregation with lookup to get allActivitiesWithCities in one database request
+    const allActivities = await activities
+      .find(
+        { [filterType]: filter },
+        {
+          _id: 0,
+          __v: 0,
+        },
+      )
+      .lean()
+      .exec();
+
+    const allCities = await cities
+      .find(
+        {},
+        {
+          _id: 0,
+          __v: 0,
+        },
+      )
+      .lean()
+      .exec();
+
+    const allActivitiesWithCities = allActivities.map((activity) => ({
+      ...activity,
+      city: allCities.find((c) => c.id === activity.cityId).name,
+    }));
+
+    return new Promise((resolve) => resolve(allActivitiesWithCities));
+  }
+
   async createActivity(activity): Promise<any> {
     // Search if city already exists
     const citySearched = await cities
