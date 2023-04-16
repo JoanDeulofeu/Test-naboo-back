@@ -8,15 +8,34 @@ interface City {
   name: string;
 }
 
+const cityIdByName = async (filter) => {
+  const city = await cities
+    .find(
+      { name: filter },
+      {
+        _id: 0,
+        __v: 0,
+      },
+    )
+    .lean()
+    .exec();
+
+  return city[0].id;
+};
+
 @Injectable()
 export class ActivitiesService {
   async getActivities(request): Promise<any> {
     const { filterType, filter } = request.query;
 
+    const filterTypeValue = filterType !== 'city' ? filterType : 'cityId';
+    const filterValue =
+      filterType !== 'city' ? filter : await cityIdByName(filter);
+
     // TODO Make a aggregation with lookup to get allActivitiesWithCities in one database request
     const allActivities = await activities
       .find(
-        { [filterType]: filter },
+        { [filterTypeValue]: filterValue },
         {
           _id: 0,
           __v: 0,
