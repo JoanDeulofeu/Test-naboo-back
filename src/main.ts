@@ -13,8 +13,6 @@ const ip = 'naboo-test-tech.8eggo9n.mongodb.net';
 const databaseName = 'test';
 const uri = `mongodb+srv://${name}:${mdp}@${ip}/${databaseName}?retryWrites=true&w=majority`;
 
-// ----- LOG to test. Remove it ! -----
-console.log('uri: ', uri);
 mongoose.connect(uri);
 const database = mongoose.connection;
 
